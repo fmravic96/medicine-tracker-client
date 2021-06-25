@@ -1,11 +1,15 @@
-import { Box, Flex, useColorModeValue, Stack, Button } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue, Stack, Button, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import { Image } from "@chakra-ui/react";
 import Link from "next/link";
+import { Register } from "./Register";
+import { Login } from "./Login";
 
 interface Props {}
 
 export const Navbar = (props: Props) => {
+  const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
+  const { isOpen: isOpenLogin, onOpen: onOpenLogin, onClose: onCloseLogin } = useDisclosure();
   return (
     <Box>
       <Flex
@@ -28,8 +32,19 @@ export const Navbar = (props: Props) => {
         </Flex>
 
         <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-          <Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"} href={"#"}>
-            Sign In
+          <Button
+            display="inline-flex"
+            fontSize={"sm"}
+            fontWeight={600}
+            color={"white"}
+            bg={"blue.400"}
+            href={"#"}
+            onClick={onOpenRegister}
+            _hover={{
+              bg: "blue.300",
+            }}
+          >
+            Register
           </Button>
           <Button
             display="inline-flex"
@@ -38,13 +53,17 @@ export const Navbar = (props: Props) => {
             color={"white"}
             bg={"blue.400"}
             href={"#"}
+            onClick={onOpenLogin}
             _hover={{
               bg: "blue.300",
             }}
           >
-            Sign Up
+            Login
           </Button>
         </Stack>
+
+        <Register isOpen={isOpenRegister} onOpen={onOpenRegister} onClose={onCloseRegister} />
+        <Login isOpen={isOpenLogin} onOpen={onOpenLogin} onClose={onCloseLogin} />
       </Flex>
     </Box>
   );

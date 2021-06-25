@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Dose Tracker</title>
+        <title>Dose Tracker | Home</title>
         <meta name="description" content="Dose tracker" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
