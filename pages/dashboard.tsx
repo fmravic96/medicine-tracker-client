@@ -2,6 +2,6 @@ import React from "react";
 
 interface Props {}
 
-export const dashboard = (props: Props) => {
+export default function dashboard(props: Props) {
   return <div></div>;
-};
+}

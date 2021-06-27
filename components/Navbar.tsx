@@ -1,15 +1,13 @@
-import { Box, Flex, useColorModeValue, Stack, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue, Stack, Button, Text } from "@chakra-ui/react";
 import React from "react";
 import { Image } from "@chakra-ui/react";
 import Link from "next/link";
-import { Register } from "./Register";
-import { Login } from "./Login";
+import { useUser } from "@auth0/nextjs-auth0";
 
 interface Props {}
 
 export const Navbar = (props: Props) => {
-  const { isOpen: isOpenRegister, onOpen: onOpenRegister, onClose: onCloseRegister } = useDisclosure();
-  const { isOpen: isOpenLogin, onOpen: onOpenLogin, onClose: onCloseLogin } = useDisclosure();
+  const { user, error, isLoading } = useUser();
   return (
     <Box>
       <Flex
@@ -26,44 +24,52 @@ export const Navbar = (props: Props) => {
         <Flex flex={{ base: 1 }} justify={{ base: "start", md: "center" }}>
           <Link href="/">
             <a>
-              <Image src="/medicine-tracker-logo.png" alt="Logo"></Image>
+              <Image src="/medicine-tracker-logo.png" alt="Logo" />
             </a>
           </Link>
         </Flex>
 
-        <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
-          <Button
-            display="inline-flex"
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"blue.400"}
-            href={"#"}
-            onClick={onOpenRegister}
-            _hover={{
-              bg: "blue.300",
-            }}
-          >
-            Register
-          </Button>
-          <Button
-            display="inline-flex"
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"blue.400"}
-            href={"#"}
-            onClick={onOpenLogin}
-            _hover={{
-              bg: "blue.300",
-            }}
-          >
-            Login
-          </Button>
+        <Stack flex={1} justify={"flex-end"} direction={"row"} spacing={6}>
+          {user ? (
+            <>
+              <Text color={"gray.500"} maxW={"3xl"}>
+                Welcome {user.name}!
+              </Text>
+              {user.picture && <Image borderRadius="full" boxSize="50px" src={user.picture} alt="User profile picture" />}
+              <Link href="/api/auth/logout" passHref>
+                <Button
+                  display="inline-flex"
+                  fontSize={"sm"}
+                  fontWeight={600}
+                  color={"white"}
+                  bg={"blue.400"}
+                  href={"#"}
+                  _hover={{
+                    bg: "blue.300",
+                  }}
+                >
+                  Logout
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <Link href="/api/auth/login" passHref>
+              <Button
+                display="inline-flex"
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"blue.400"}
+                href={"#"}
+                _hover={{
+                  bg: "blue.300",
+                }}
+              >
+                Login
+              </Button>
+            </Link>
+          )}
         </Stack>
-
-        <Register isOpen={isOpenRegister} onOpen={onOpenRegister} onClose={onCloseRegister} />
-        <Login isOpen={isOpenLogin} onOpen={onOpenLogin} onClose={onCloseLogin} />
       </Flex>
     </Box>
   );

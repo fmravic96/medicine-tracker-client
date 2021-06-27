@@ -1,6 +1,7 @@
 import { Container, Stack, Heading, Button, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { IllustrationIcon } from "./IllustrationIcon";
+import Link from "next/link";
 
 interface Props {}
 
@@ -19,9 +20,11 @@ export const HeroLanding = (props: Props) => {
             Register by clicking the button below and keep personal track of your medicine doses.
           </Text>
           <Stack spacing={6} direction={"row"}>
-            <Button rounded={"full"} px={6} colorScheme={"blue"} bg={"blue.400"} _hover={{ bg: "blue.500" }}>
-              Get started
-            </Button>
+            <Link href="/api/auth/login" passHref>
+              <Button rounded={"full"} px={6} colorScheme={"blue"} bg={"blue.400"} _hover={{ bg: "blue.500" }}>
+                Get started
+              </Button>
+            </Link>
             <Button rounded={"full"} px={6}>
               Learn more
             </Button>
