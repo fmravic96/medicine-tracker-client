@@ -1,13 +1,21 @@
 import { Box, Flex, useColorModeValue, Stack, Button, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "@chakra-ui/react";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 export const Navbar = (props: Props) => {
   const { user, error, isLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  });
   return (
     <Box>
       <Flex
