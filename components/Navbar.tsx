@@ -15,7 +15,8 @@ export const Navbar = (props: Props) => {
     if (user) {
       router.push("/dashboard");
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Box>
       <Flex
